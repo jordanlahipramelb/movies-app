@@ -3,14 +3,14 @@
 ## Steps to Start the App
 
 - Install React frontend dependencies
-  npm install
+  `npm install`
 - Install Node backend dependencies
-  npm install
+  `npm install`
 
 - Start React App
-  npm start
+  `npm start`
 - Start Node App
-  npm start
+  `npm start`
 
 ## Technologies Utilized
 
