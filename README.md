@@ -14,10 +14,9 @@
 
 ## Technologies Utilized
 
-- HTML
-- JavaScript
-  - ReactJS
-  - NodeJS
-    - ExpressJS
+- ReactJS
+- ReduxJS
+- NodeJS
+  - ExpressJS
 - MongoDB
 - Sass/Bootstrap
