@@ -1,0 +1,42 @@
+.auth-page {
+	width: 100%;
+	height: 60vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	background-color: black;
+	color: white;
+
+	.title {
+		padding-bottom: 1rem;
+		text-align: center;
+	}
+
+	input {
+		margin-bottom: 10px;
+		border: 0;
+		height: 50px;
+		background: #e2e2e2;
+		color: rgb(0, 0, 0);
+		padding: 0 20px;
+	}
+
+	button {
+		color: white;
+		background-color: #c70000c7;
+
+		font: 11px;
+		letter-spacing: 3px;
+		text-decoration: none;
+		padding: 8px 10px;
+		border: 1px solid #c70000c7;
+		float: right;
+		border-radius: 4px;
+		transition: 0.3s;
+
+		&:hover {
+			background-color: #ffffffc7;
+			color: rgba(255, 0, 0, 0.822);
+		}
+	}
+}
