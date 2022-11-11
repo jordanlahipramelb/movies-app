@@ -8,6 +8,7 @@ import Navbar from "./components/Navbar";
 import Movies from "./pages/Movies";
 import TVShows from "./pages/TVShows";
 import UserLikedList from "./pages/UserLikedMovies";
+import SearchList from "./pages/SearchList";
 
 function App() {
 	return (
@@ -21,6 +22,7 @@ function App() {
 					<Route exact path="/movies" element={<Movies />} />
 					<Route exact path="/tvshows" element={<TVShows />} />
 					<Route exact path="/mylist" element={<UserLikedList />} />
+					<Route exact path="/search" element={<SearchList />} />
 				</Routes>
 			</AuthContextProvider>
 		</BrowserRouter>

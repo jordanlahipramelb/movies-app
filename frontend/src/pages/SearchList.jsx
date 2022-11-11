@@ -1,15 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { fetchGenres, fetchMovies } from "../store";
-import "../styles/Movies.scss";
+import { fetchSearch } from "../store";
+import "../styles/SearchList.scss";
 import { firebaseAuth } from "../utils/firebase-config";
 import { onAuthStateChanged } from "firebase/auth";
-import SelectGenre from "../components/SelectGenre";
+import SearchBar from "../components/SearchBar";
 import Card from "../components/Card";
 import NoneAvailable from "../components/NoneAvailable";
 
-const Movies = () => {
+function SearchList() {
 	// Access Redux store state
 	const genresLoaded = useSelector((state) => state.moviesApp.genresLoaded);
 	const genres = useSelector((state) => state.moviesApp.genres);
@@ -20,26 +20,21 @@ const Movies = () => {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		dispatch(fetchGenres());
+		dispatch(fetchSearch());
 	}, []);
-
-	// Run whenever genresLoaded state changes
-	useEffect(() => {
-		if (genresLoaded) dispatch(fetchMovies({ type: "movie" }));
-	}, [genresLoaded]);
 
 	onAuthStateChanged(firebaseAuth, (currentUser) => {
 		if (!currentUser) navigate("/login");
 	});
 
-	// console.log(movies);
-	// console.log("genres", genres);
-
+	const search = async (searchTerm) => {
+		await fetchSearch({ searchKey: searchTerm });
+	};
 	return (
 		<div className="movies-page">
 			<div className="container">
-				<div className="d-flex justify-content-center justify-content-md-end pb-5">
-					<SelectGenre genres={genres} type="movie" />
+				<div className="d-flex justify-content-center pb-5">
+					<SearchBar searchFor={search} />
 				</div>
 
 				<div className="row">
@@ -61,6 +56,6 @@ const Movies = () => {
 			</div>
 		</div>
 	);
-};
+}
 
-export default Movies;
+export default SearchList;

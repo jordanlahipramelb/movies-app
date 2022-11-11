@@ -1,0 +1,27 @@
+.searchlist-page {
+	padding-top: 8rem;
+	padding-bottom: 8rem;
+
+	.search {
+		border: 1px solid rgba(255, 255, 255, 0.432);
+		background-color: rgba(0, 0, 0, 0.6);
+		display: flex;
+		gap: 0.4rem;
+		align-items: center;
+		justify-content: center;
+		padding: 0.2rem;
+		padding-left: 0.5rem;
+
+		input {
+			width: 100%;
+			padding: 0.3rem;
+			border: transparent;
+		}
+	}
+
+	.none-available {
+		text-align: center;
+		color: white;
+		margin-top: 4rem;
+	}
+}

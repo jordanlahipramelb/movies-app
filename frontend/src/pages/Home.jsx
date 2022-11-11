@@ -28,8 +28,8 @@ function Home() {
 
 				<div className="row">
 					{movies.map((movie) => (
-						<div className="col d-flex justify-content-center">
-							<Card movieData={movie} />
+						<div key={movie.id} className="col d-flex justify-content-center">
+							<Card movieData={movie} index={movie.id} />
 						</div>
 					))}
 				</div>

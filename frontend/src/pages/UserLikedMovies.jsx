@@ -27,10 +27,14 @@ function UserLikedList() {
 		<div className="mylist-page">
 			<div className="container">
 				<div className="row">
-					{movies ? (
+					{movies.length ? (
 						<>
 							{movies.map((movie, index) => (
-								<div className="col d-flex justify-content-center">
+								<div
+									className="col d-flex justify-content-center"
+									index={index}
+									key={movie.id}
+								>
 									<Card
 										movieData={movie}
 										index={index}

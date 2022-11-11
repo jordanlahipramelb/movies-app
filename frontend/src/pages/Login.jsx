@@ -1,7 +1,9 @@
+import { onAuthStateChanged } from "firebase/auth";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
 import "../styles/Auth.scss";
+import { firebaseAuth } from "../utils/firebase-config";
 
 function Login() {
 	const [formData, setFormData] = useState({
@@ -9,7 +11,7 @@ function Login() {
 		password: "",
 	});
 	const [error, setError] = useState("");
-	const { user, logIn } = UserAuth();
+	const { logIn } = UserAuth();
 	const navigate = useNavigate();
 
 	/** Updates form field when typing */
@@ -34,6 +36,10 @@ function Login() {
 			setError(error.message);
 		}
 	};
+
+	onAuthStateChanged(firebaseAuth, (currentUser) => {
+		if (currentUser) navigate("/");
+	});
 
 	return (
 		<div className="auth-page">

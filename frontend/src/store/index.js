@@ -45,7 +45,9 @@ const createArrFromRawData = (arr, moviesArr, genres) => {
 				id: movie.id,
 				name: movie?.original_name ? movie.original_name : movie.original_title,
 				image: movie.backdrop_path,
-				genres: movieGenres.slice(0, 3), // only need the first 3 genres
+				overview: movie.overview,
+				release_date: movie.release_date,
+				genres: movieGenres.slice(0, 3), // first 3 genres
 			});
 	});
 };
@@ -86,6 +88,28 @@ export const fetchDataByGenre = createAsyncThunk(
 	}
 );
 
+/** Fetch Search Movie List
+ *
+ * thunkApi => current state in order to get genres
+ * search => search keyword state
+ * moviesApp => movieAppSlice
+ */
+
+export const fetchSearch = createAsyncThunk(
+	"movies/search",
+	async ({ searchKey }, thunkApi) => {
+		const {
+			moviesApp: { genres },
+		} = thunkApi.getState();
+
+		return fetchRawData(
+			`${TMDB_BASE_URL}/search/company?api_key=${API_KEY}&query=${searchKey}`,
+			genres,
+			true
+		);
+	}
+);
+
 /** Fetch trending of the week
  *
  * thunkApi => current state in order to get genres
@@ -118,9 +142,9 @@ export const fetchUsersLikedMovies = createAsyncThunk(
 	}
 );
 
-export const removeMovieFromLiked = createAsyncThunk(
+export const removeMovieFromLikedMovies = createAsyncThunk(
 	"movies/deleteLiked",
-	async ({ movieId, email }) => {
+	async ({ email, movieId }) => {
 		const {
 			data: { movies },
 		} = await axios.put("http://localhost:3001/api/user/remove", {
@@ -146,6 +170,11 @@ const moviesAppSlice = createSlice({
 			state.movies = action.payload;
 		});
 
+		/** Search */
+		builder.addCase(fetchSearch.fulfilled, (state, action) => {
+			state.movies = action.payload;
+		});
+
 		/** Data by genre */
 		builder.addCase(fetchDataByGenre.fulfilled, (state, action) => {
 			state.movies = action.payload;
@@ -157,7 +186,7 @@ const moviesAppSlice = createSlice({
 		});
 
 		/** Remove movie from list */
-		builder.addCase(removeMovieFromLiked.fulfilled, (state, action) => {
+		builder.addCase(removeMovieFromLikedMovies.fulfilled, (state, action) => {
 			state.movies = action.payload;
 		});
 	},

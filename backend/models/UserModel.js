@@ -15,4 +15,4 @@ const UserSchema = new mongoose.Schema({
 	likedMovies: Array,
 });
 
-module.exports = mongoose.model("Users", UserSchema);
+module.exports = mongoose.model("users", UserSchema);

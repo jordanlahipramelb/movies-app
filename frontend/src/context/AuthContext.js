@@ -13,7 +13,7 @@ const AuthContext = createContext();
 
 export function AuthContextProvider({ children }) {
 	const [user, setUser] = useState({});
-	console.log(user);
+	// console.log(user);
 
 	function signUp(email, password) {
 		try {

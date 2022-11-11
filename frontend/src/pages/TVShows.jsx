@@ -40,11 +40,11 @@ function TVShows() {
 				</div>
 
 				<div className="row">
-					{tvShows ? (
+					{tvShows.length ? (
 						<>
 							{tvShows.map((movie) => (
 								<div className="col d-flex justify-content-center">
-									<Card movieData={movie} />
+									<Card movieData={movie} key={movie.id} index={movie.id} />
 								</div>
 							))}
 						</>

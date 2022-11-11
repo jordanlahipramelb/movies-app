@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import "../styles/SelectGenre.scss";
 
 import { fetchDataByGenre } from "../store";
+
 const SelectGenre = ({ genres, type }) => {
 	const dispatch = useDispatch();
 

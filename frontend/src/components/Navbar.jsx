@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-// import { FaSearch } from "react-icons/fa";
+import { FaSearch } from "react-icons/fa";
 import { firebaseAuth } from "../utils/firebase-config";
 import { UserAuth } from "../context/AuthContext";
 import "../styles/Navbar.scss";
 
 function Navbar() {
-	const [showSearch, setShowSearch] = useState(false);
-	const [inputHover, setInputHover] = useState(false);
 	const { user, logOut } = UserAuth();
 
 	const loggedInUser = () => {
@@ -48,6 +46,9 @@ function Navbar() {
 						<li>
 							<Link to="/tvshows">TV Shows</Link>
 						</li>
+						<li>
+							<Link to="/search">Search</Link>
+						</li>
 
 						{user ? (
 							<li>
@@ -57,29 +58,6 @@ function Navbar() {
 					</ul>
 				</div>
 				<div className="right d-flex align-items-center">
-					{/* <div className={`search ${showSearch ? "show-search" : ""}`}>
-						<button
-							onFocus={() => setShowSearch(true)}
-							onBlur={() => {
-								if (!inputHover) {
-									setShowSearch(false);
-								}
-							}}
-						>
-							<FaSearch />
-						</button>
-						<input
-							type="text"
-							placeholder="Search"
-							onMouseEnter={() => setInputHover(true)}
-							onMouseLeave={() => setInputHover(false)}
-							onBlur={() => {
-								setShowSearch(false);
-								setInputHover(false);
-							}}
-						/>
-					</div> */}
-
 					{user ? loggedInUser() : loggedOutUser()}
 				</div>
 			</nav>
