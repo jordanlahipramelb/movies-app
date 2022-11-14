@@ -46,9 +46,9 @@ function Navbar() {
 						<li>
 							<Link to="/tvshows">TV Shows</Link>
 						</li>
-						<li>
+						{/* <li>
 							<Link to="/search">Search</Link>
-						</li>
+						</li> */}
 
 						{user ? (
 							<li>

@@ -1,4 +1,3 @@
-const { BadRequestError, NotFoundError } = require("../expressError");
 const User = require("../models/UserModel");
 
 class UserController {
@@ -9,9 +8,9 @@ class UserController {
 			const user = await User.findOne({ email });
 			if (user) {
 				return res.json({ msg: "success", movies: user.likedMovies });
-			} else throw NotFoundError(`User with email ${email} not found.`);
+			} else return res.json(`User with email ${email} not found.`);
 		} catch (error) {
-			throw new BadRequestError(`Error fetching movies.`);
+			return res.json({ msg: "Error fetching movies." });
 		}
 	}
 
@@ -37,16 +36,14 @@ class UserController {
 						},
 						{ new: true }
 					);
-				} else {
-					throw new BadRequestError(`Movie already exists in list.`);
-				}
+				} else return res.json({ msg: `Movie already exists in list.` });
 			}
 			// If user does not exist in DB, create the User and add the movie to their list
 			else await User.create({ email, likedMovies: [data] });
 
 			return res.json({ msg: "Movie successfully added to list." });
 		} catch (err) {
-			throw new BadRequestError(`Error adding movie to list.`);
+			return res.json({ msg: `Error adding movie to list.` });
 		}
 	}
 
@@ -62,7 +59,7 @@ class UserController {
 				const movieIdx = movies.findIndex(({ id }) => id === movieId);
 
 				if (!movieIdx) {
-					throw NotFoundError(`Movie not found in liked list.`);
+					res.status(400).send({ msg: "Movie not found." });
 				}
 
 				// remove movie from liked movies
@@ -84,7 +81,7 @@ class UserController {
 			} else return res.json({ msg: "User with given email not found." });
 		} catch (error) {
 			console.log(error);
-			throw new BadRequestError("Error removing movie from liked list");
+			return res.json({ msg: "Error removing movie from liked list" });
 		}
 	}
 }

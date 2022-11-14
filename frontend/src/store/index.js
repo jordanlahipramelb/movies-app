@@ -12,6 +12,7 @@ const initialState = {
 	movies: [],
 	genresLoaded: false,
 	genres: [],
+	searchedMovies: [],
 };
 
 /** Fetch movie genres */
@@ -172,7 +173,7 @@ const moviesAppSlice = createSlice({
 
 		/** Search */
 		builder.addCase(fetchSearch.fulfilled, (state, action) => {
-			state.movies = action.payload;
+			state.searchedMovies = action.payload;
 		});
 
 		/** Data by genre */

@@ -22,7 +22,7 @@ function App() {
 					<Route exact path="/movies" element={<Movies />} />
 					<Route exact path="/tvshows" element={<TVShows />} />
 					<Route exact path="/mylist" element={<UserLikedList />} />
-					<Route exact path="/search" element={<SearchList />} />
+					{/* <Route exact path="/search" element={<SearchList />} /> */}
 				</Routes>
 			</AuthContextProvider>
 		</BrowserRouter>

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { FaSearch } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { fetchSearch } from "../store";
@@ -8,44 +9,71 @@ import { onAuthStateChanged } from "firebase/auth";
 import SearchBar from "../components/SearchBar";
 import Card from "../components/Card";
 import NoneAvailable from "../components/NoneAvailable";
+import { API_KEY, TMDB_BASE_URL } from "../utils/constants";
+import axios from "axios";
 
 function SearchList() {
-	// Access Redux store state
-	const genresLoaded = useSelector((state) => state.moviesApp.genresLoaded);
-	const genres = useSelector((state) => state.moviesApp.genres);
-	const movies = useSelector((state) => state.moviesApp.movies);
-
 	// Run (dispatch) functions in redux store
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
-	useEffect(() => {
-		dispatch(fetchSearch());
-	}, []);
+	const [searchValue, setSearchValue] = useState("");
+	const [content, setContent] = useState([]);
+
+	const fetchSearch = async (e) => {
+		try {
+			const { data } = await axios.get(
+				`${TMDB_BASE_URL}/search/company?api_key=${API_KEY}&query=${searchValue}`
+			);
+			setContent(data.results);
+			// console.log(data);
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
+	// useEffect(() => {
+	// 	window.scroll(0, 0);
+	// 	fetchSearch();
+	// 	// eslint-disable-next-line
+	// }, []);
 
 	onAuthStateChanged(firebaseAuth, (currentUser) => {
 		if (!currentUser) navigate("/login");
 	});
 
-	const search = async (searchTerm) => {
-		await fetchSearch({ searchKey: searchTerm });
-	};
+	console.log(content);
+
 	return (
-		<div className="movies-page">
+		<div className="search-page">
 			<div className="container">
 				<div className="d-flex justify-content-center pb-5">
-					<SearchBar searchFor={search} />
+					<div className="search">
+						<button onClick={fetchSearch}>
+							<FaSearch />
+						</button>
+						<input
+							type="text"
+							value={searchValue}
+							onChange={(e) => setSearchValue(e.target.value)}
+							placeholder="Search"
+						/>
+					</div>
 				</div>
 
 				<div className="row">
-					{movies.length ? (
+					{content.length ? (
 						<>
-							{movies.map((movie) => (
+							{content.map((content) => (
 								<div
-									key={movie.id}
+									key={content.id}
 									className="col d-flex justify-content-center"
 								>
-									<Card movieData={movie} key={movie.id} index={movie.id} />
+									<Card
+										movieData={content}
+										key={content.id}
+										index={content.id}
+									/>
 								</div>
 							))}
 						</>
